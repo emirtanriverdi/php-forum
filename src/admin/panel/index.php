@@ -1,5 +1,6 @@
 <?php
 session_start();
+$quote = '';
 
 if (!isset($_COOKIE["admin_cookie"])) {
     header("Location: ../"); // Kullanıcı girişi yoksa giriş sayfasına yönlendirme
@@ -141,8 +142,44 @@ mysqli_close($conn);
     </div>
     <div class="container mt-5">
     <p>Eğer admin iseniz giriş yaptığınız halde kayıt ol ve giriş yap sayfalarına erişebilirsiniz.</p>
+     <p id="rastgeleSoz"></p>
     </div>
-    <!-- Bootstrap JS dosyasını ekleyin -->
+  <script>
+    var sozler = [
+      "Hayatta en hakiki mürşit ilimdir.",
+      "Okumak, düşünmenin merdivenidir.",
+      "Bir kitap, bin dost demektir.",
+      "Kitaplar insanları özgürleştirir.",
+      "Sözler kısa, bilgi sonsuzdur.",
+      "Bir sayfa okuyan, bir dünyayı gezmiş gibidir.",
+      "Kendi portremi resmediyorum çünkü çoğunlukla yalnızım, çünkü en iyi tanıdığım insanım.",
+      "Yaşam, en güçlüleri bile baş aşağı getirebilir.",
+      "Babam cennetten buğday çalmış. Eğer ben cennete düşersem, bütün cenneti çalarım.",
+      "Yorgunsak eğer, bu daha önceden çok bir yolu yürüdüğümüzden değilmidir? insanın yeryüzünde verilecek bir savaşı olduğu doğruysa, o doygunluk duygusu ve başın yanıp tutuşması, uzun süredir mücadele ettiğimizin göstergesi değil midir?",
+      "Nereye gideceğini bilmiyorsan hangi yoldan gittiğinin hiçbir önemli yoktur.",
+      "Yer ve gök boyunca, bir ben yüceler yücesiyim.",
+      "Olana isyan etmektense onu sevmek en iyisidir.",
+      "Işık hızına yakın bir hızdaki 1 gr'lık iğne dünyaya çarpacak olursa inanılmaz şeyler olsada en kısa anlatımıyla 50 megaton yani çar bombası gücünde bir patlama yaratırdı. Yani iğne ölüm olurdu. 😂",
+      "Bazen hiçbir şey yapmamak şifalı olandır.",
+      "En uç çözümler, en uç hastalıklar için çok uygundur.",
+      "Esasında hayatta iki şey vardır: Bilim ve şahsi düşünceler. İlki bilgiye yol açar, ikincisi cehalete.",
+      "Hastalıklar için iki şeyi alışkanlık haline getir: Yardım et veya en azından zararlı olanı yapma.",
+      "Her şey doğaya karşı çıkıyor.",
+      "Yaşam kısa, bilim uzundur; kriz kısacık, deneyim tehlikeli ve karar zordur.",
+      "estetikli bayanların anasını sikeyim",
+      "Şuana kadar yaşamış tüm canlıların yalnızca %6'sını biliyoruz %1 şuan yaşayan türler %5 fosiller ile öğrendiğimiz türler.",
+      "Ne en güçlü olan tür hayatta kalır, ne de en zeki olan; değişime en çok adapte olabilendir, hayatta kalan.",
+      "Yaşam: organizasyon ve iç aktivite.",
+      "Dinozorlar nasıl sikişiyor. 😳",
+      "Benim bir dinim yok ve bazen bütün dinlerin denizin dibini boylamasını istiyorum. Hükümetini ayakta tutmak için dini kullanmaya gerek duyanlar zayıf yöneticilerdir. Âdetâ halkı bir kapana kıstırırlar. Benim halkım demokrasi ilkelerini, gerçeğin emirlerini ve bilimin öğretilerini öğrenecektir. Batıl inançlardan vazgeçilmelidir. İsteyen istediği gibi ibadet edebilir. Herkes kendi vicdanının sesini dinler. Ama bu davranış ne sağduyulu mantıkla çelişmeli ne de başkalarının özgürlüğüne karşı çıkmasına yol açmalıdır.",
+      "Bir kahraman veya bir tanrı değil, bir insan."
+    ];
+    function rastgeleSozGoster() {
+      var indeks = Math.floor(Math.random() * sozler.length);
+      document.getElementById("rastgeleSoz").textContent = sozler[indeks];
+    }
+    window.onload = rastgeleSozGoster;
+  </script>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.3/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

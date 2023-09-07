@@ -17,16 +17,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $sql = "INSERT INTO `admin` (`username`, `password`) VALUES ('$username', '$hashedPassword')";
 
         if ($conn->query($sql) === TRUE) {
-
             // Admin account created successfully
-            // Now, delete the files
 
+            // Dosyaları ve klasörü sil
             $filesToDelete = ['index.php', 'sql.php', 'admin.php'];
             foreach ($filesToDelete as $file) {
-
                 if (file_exists($file)) {
-                    unlink($file); // Delete the file
+                    unlink($file); // Dosyayı sil
                 }
+            }
+
+            // Klasörü sil
+            $folderToDelete = '../install';
+            if (is_dir($folderToDelete)) {
+                if (rmdir($folderToDelete)) {
+                    echo "Klasör başarıyla silindi.";
+                } else {
+                    $errors[] = "Klasörü silerken bir hata oluştu.";
+                }
+            } else {
+                $errors[] = "Klasör mevcut değil.";
             }
         } else {
             $errors[] = "Admin hesabını oluştururken hata oluştu: " . $conn->error;
@@ -34,7 +44,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
