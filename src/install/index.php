@@ -2,8 +2,8 @@
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $host = $_POST['host'];
-    $username = $_POST['username'];
-    $password = $_POST['password'];
+    $username = $_POST['db_username'];
+    $password = $_POST['db_password'];
     $database = $_POST['database'];
 
     // Bağlantı bilgilerini connect.php dosyasına kaydet
@@ -13,10 +13,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $content = <<<EOD
 <?php
 \$host = '$host';
-\$username = '$username';
-\$password = '$password';
+\$db_username = '$db_username';
+\$db_password = '$db_password';
 \$database = '$database';
-\$conn = new mysqli(\$host, \$username, \$password, \$database);
+\$conn = new mysqli(\$host, \$db_username, \$db_password, \$database);
 
 if (\$conn->connect_error) {
     die("Bağlantı hatası: " . \$conn->connect_error);
