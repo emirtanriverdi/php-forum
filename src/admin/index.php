@@ -1,3 +1,11 @@
+<?php
+// "admin_cookie" çerezi kontrolü
+if(isset($_COOKIE['admin_cookie'])) {
+    // "admin_cookie" çerezi varsa, kullanıcıyı yönlendir
+    header("Location: panel"); // Yönlendirilecek sayfanın URL'sini buraya ekleyin
+    exit; // İşlemi sonlandır
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>

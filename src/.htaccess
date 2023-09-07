@@ -1,9 +1,9 @@
-RewriteEngine On
-RewriteRule ^register$ register.php [L]
-RewriteRule ^login$ login.php [L]
-RewriteRule ^logout$ logout.php [L]
-RewriteRule ^404$ 404.php [L]
-ErrorDocument 404 /404
-RewriteRule ^create$ create.php [L]
-RewriteRule ^reply$ reply.php [L]
+RewriteEngine On
+RewriteRule ^register$ register.php [L]
+RewriteRule ^login$ login.php [L]
+RewriteRule ^logout$ logout.php [L]
+RewriteRule ^404$ 404.php [L]
+ErrorDocument 404 /404
+RewriteRule ^create$ create.php [L]
+RewriteRule ^reply$ reply.php [L]
 RewriteRule ^topic$ topic.php [L]

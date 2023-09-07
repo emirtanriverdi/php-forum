@@ -1,41 +1,40 @@
 <?php
-
-
 include '../connect.php';
+
+$errors = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
 
-    // Parolayı hashle
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-    // Admin hesabını oluştur
-    $sql = "INSERT INTO `admin` (`username`, `password`) VALUES ('$username', '$hashedPassword')";
-
-    if ($conn->query($sql) === TRUE) {
-
-        // Admin account created successfully
-        // Now, delete the files
-
-        $filesToDelete = ['index.php', 'sql.php', 'admin.php'];
-        foreach ($filesToDelete as $file) {
-
-            if (file_exists($file)) {
-
-                unlink($file); // Delete the file
-
-            }
-
-        }
-        echo "Admin hesabı başarıyla oluşturuldu ve gerekli dosyalar silindi.";
-
+    if (empty($username) || empty($password)) {
+        $errors[] = "Kullanıcı adı ve şifre alanları boş bırakılamaz.";
     } else {
-        echo "Admin hesabını oluştururken hata oluştu: " . $conn->error;
+        // Parolayı hashle
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+
+        // Admin hesabını oluştur
+        $sql = "INSERT INTO `admin` (`username`, `password`) VALUES ('$username', '$hashedPassword')";
+
+        if ($conn->query($sql) === TRUE) {
+
+            // Admin account created successfully
+            // Now, delete the files
+
+            $filesToDelete = ['index.php', 'sql.php', 'admin.php'];
+            foreach ($filesToDelete as $file) {
+
+                if (file_exists($file)) {
+                    unlink($file); // Delete the file
+                }
+            }
+        } else {
+            $errors[] = "Admin hesabını oluştururken hata oluştu: " . $conn->error;
+        }
     }
 }
-
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,7 +58,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <li class="nav-item">
                     <a class="nav-link" href="../login">Giriş yap</a>
                 </li>
-                    <li class="nav-item">
+                <li class="nav-item">
                     <a class="nav-link" href="../create">Konu oluştur</a>
                 </li>
             </ul>
@@ -67,14 +66,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 </nav>
 <div class="container mt-5">
-    <h1>Admin Oluştur</h1>
-    <form method="POST">
-        <label for="username">Kullanıcı Adı:</label>
-        <input type="text" name="username" required><br><br>
-        <label for="password">Şifre:</label>
-        <input type="password" name="password" required><br><br>
-        <input type="submit" value="Oluştur">
-    </form>
+    <div class="card">
+        <div class="card-body">
+            <h1 class="card-title">Admin Oluştur</h1>
+            
+            <?php foreach ($errors as $error): ?>
+                <div class="alert alert-danger"><?= $error ?></div>
+            <?php endforeach; ?>
+
+            <form method="POST">
+                <div class="form-group">
+                    <label for="username">Kullanıcı Adı:</label>
+                    <input type="text" class="form-control" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Şifre:</label>
+                    <input type="password" class="form-control" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Oluştur</button>
+            </form>
+        </div>
+    </div>
 </div>
 </body>
 </html>
