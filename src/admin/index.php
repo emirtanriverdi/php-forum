@@ -34,31 +34,7 @@
                 <div class="card">
                     <div class="card-header">Admin Girişi</div>
                     <div class="card-body">
-                        <?php
-                        if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                            include("../connect.php");
-                            
-                            $username = $_POST["username"];
-                            $password = $_POST["password"];
-                            
-                            $sql = "SELECT * FROM admin WHERE username = '$username' AND password = '$password'";
-                            $result = $conn->query($sql);
-                            
-                            if ($result->num_rows > 0) {
-                                // Kullanıcı girişi başarılı
-                                $cookie_name = "admin_cookie";
-                                $cookie_value = "admin";
-                                $expiry_time = time() + (30 * 24 * 60 * 60); // 30 gün
-                                setcookie($cookie_name, $cookie_value, $expiry_time, "/");
-                                header("Location: panel"); // Admin paneline yönlendirme
-                            } else {
-                                // Kullanıcı adı veya şifre hatalı
-                                echo '<div class="alert alert-danger">Kullanıcı adı veya şifre hatalı.</div>';
-                            }
-                            
-                            $conn->close();
-                        }
-                        ?>
+<?phpif ($_SERVER["REQUEST_METHOD"] == "POST") {    include("../connect.php");        $username = $_POST["username"];    $password = $_POST["password"];        $sql = "SELECT * FROM admin WHERE username = '$username'";    $result = $conn->query($sql);        if ($result->num_rows > 0) {        $row = $result->fetch_assoc();                // Veritabanından alınan hash ile kullanıcının girdiği şifreyi karşılaştır        if (password_verify($password, $row["password"])) {            // Kullanıcı girişi başarılı            $cookie_name = "admin_cookie";            $cookie_value = "admin";            $expiry_time = time() + (30 * 24 * 60 * 60); // 30 gün            setcookie($cookie_name, $cookie_value, $expiry_time, "/");            header("Location: panel"); // Admin paneline yönlendirme        } else {            // Kullanıcı adı veya şifre hatalı            echo '<div class="alert alert-danger">Kullanıcı adı veya şifre hatalı.</div>';        }    } else {        // Kullanıcı adı hatalı        echo '<div class="alert alert-danger">Kullanıcı adı hatalı.</div>';    }        $conn->close();}?>
                         <form method="POST">
                             <div class="mb-3">
                                 <label for="username" class="form-label">Kullanıcı Adı:</label>

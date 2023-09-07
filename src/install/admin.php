@@ -1,12 +1,4 @@
-<?php
-include '../connect.php';
-
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-
-    // Admin hesabını oluştur
-    $sql = "INSERT INTO `admin` (`username`, `password`) VALUES ('$username', '$password')";
+<?phpinclude '../connect.php';if ($_SERVER['REQUEST_METHOD'] === 'POST') {    $username = $_POST['username'];    $password = $_POST['password'];    // Parolayı hashle    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);    // Admin hesabını oluştur    $sql = "INSERT INTO `admin` (`username`, `password`) VALUES ('$username', '$hashedPassword')";
     if ($conn->query($sql) === TRUE) {
         // Admin account created successfully
 
