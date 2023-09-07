@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Admin account created successfully
 
         // Now, delete the files
-        $filesToDelete = ['install.php', 'sql.php', 'admin.php'];
+        $filesToDelete = ['index.php', 'sql.php', 'admin.php'];
 
         foreach ($filesToDelete as $file) {
             if (file_exists($file)) {
