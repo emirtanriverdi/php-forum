@@ -1,14 +1,10 @@
 <?php
-
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $host = $_POST['host'];
     $db_username = $_POST['db_username'];
     $db_password = $_POST['db_password'];
     $database = $_POST['database'];
-
-    // Bağlantı bilgilerini connect.php dosyasına kaydet
     $connect_file = fopen('../connect.php', 'w');
-    
     if ($connect_file) {
         $content = <<<EOD
 <?php
@@ -17,31 +13,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 \$db_password = '$db_password';
 \$database = '$database';
 \$conn = new mysqli(\$host, \$db_username, \$db_password, \$database);
-
 if (\$conn->connect_error) {
-    die("Bağlantı hatası: " . \$conn->connect_error);
+    die("real.");
 }
 ?>
 EOD;
-
         if (fwrite($connect_file, $content) === false) {
             die("connect.php dosyasına yazılamadı.");
         }
         fclose($connect_file);
-
-        // SQL tablolarını oluştur
         include 'sql.php';
-
-        // Admin oluşturma sayfasına yönlendir
         header('Location: admin.php');
         exit();
     } else {
         die("connect.php dosyası açılamadı veya yazılamadı.");
     }
 }
-
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -73,30 +61,18 @@ EOD;
     </div>
 </nav>
 <div class="container mt-5">
-    <div class="card">
-        <div class="card-body">
-            <h1 class="card-title">MySQL Bağlantı Bilgileri</h1>
-            <form method="POST">
-                <div class="form-group">
-                    <label for="host">Host:</label>
-                    <input type="text" class="form-control" name="host" required>
-                </div>
-                <div class="form-group">
-                    <label for="username">Kullanıcı Adı:</label>
-                    <input type="text" class="form-control" name="username" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Şifre:</label>
-                    <input type="password" class="form-control" name="password" required>
-                </div>
-                <div class="form-group">
-                    <label for="database">Veritabanı Adı:</label>
-                    <input type="text" class="form-control" name="database" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Devam</button>
-            </form>
-        </div>
+    <h1>MySQL Bağlantı Bilgileri</h1>
+    <form method="POST">
+        <label for="host">Host:</label>
+        <input type="text" name="host" required><br><br>
+        <label for="username">Kullanıcı Adı:</label>
+        <input type="text" name="db_username" required><br><br>
+        <label for="password">Şifre:</label>
+        <input type="password" name="db_password" required><br><br>
+        <label for="database">Veritabanı Adı:</label>
+        <input type="text" name="database" required><br><br>
+        <input type="submit" value="Devam">
+    </form>
     </div>
-</div>
 </body>
 </html>
