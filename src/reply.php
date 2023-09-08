@@ -14,9 +14,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $message = mysqli_real_escape_string($conn, $message);
     $user_id = $_SESSION['user_id'];
+    
+    // Kullanıcının adını veritabanından alın
+    $user_query = "SELECT username FROM users WHERE id = '$user_id'";
+    $user_result = mysqli_query($conn, $user_query);
+    $user_row = mysqli_fetch_assoc($user_result);
+    $username = $user_row['username'];
 
     // Yeni mesajı ekleyin
-    $query = "INSERT INTO messages (message, user_id, topic_id) VALUES ('$message', '$user_id', '$topic_id')";
+    $query = "INSERT INTO messages (message, user_id, topic_id, username) VALUES ('$message', '$user_id', '$topic_id', '$username')";
     if (mysqli_query($conn, $query)) {
         // Başarılı bir şekilde mesaj eklenmiş, kullanıcıyı konu sayfasına yönlendirin
         header("Location: topic.php?id=$topic_id");

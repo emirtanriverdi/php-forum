@@ -17,22 +17,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $user_id = $_SESSION['user_id'];
 
-    // Yeni konuyu ekleyin
-    $query = "INSERT INTO topics (topic_title) VALUES ('$topic_title')";
-    if (mysqli_query($conn, $query)) {
-        $topic_id = mysqli_insert_id($conn);
+    // Kullanıcının adını alın
+    $user_query = "SELECT username FROM users WHERE id = '$user_id'";
+    $user_result = mysqli_query($conn, $user_query);
 
-        // Mesajı yeni konuya ekleyin
-        $message_query = "INSERT INTO messages (message, user_id, topic_id) VALUES ('$message', '$user_id', '$topic_id')";
-        if (mysqli_query($conn, $message_query)) {
-            // Başarılı bir şekilde konu ve mesaj oluşturuldu, kullanıcıyı yönlendirin
-            header("Location: topic?id=$topic_id");
-            exit();
+    if ($user_result && mysqli_num_rows($user_result) > 0) {
+        $user_row = mysqli_fetch_assoc($user_result);
+        $username = $user_row['username'];
+
+        // Yeni konuyu ekleyin ve kullanıcının adını ekleyin
+        $query = "INSERT INTO topics (topic_title, username) VALUES ('$topic_title', '$username')";
+        if (mysqli_query($conn, $query)) {
+            $topic_id = mysqli_insert_id($conn);
+
+            // Mesajı yeni konuya ekleyin
+            $message_query = "INSERT INTO messages (message, user_id, topic_id) VALUES ('$message', '$user_id', '$topic_id')";
+            if (mysqli_query($conn, $message_query)) {
+                // Başarılı bir şekilde konu ve mesaj oluşturuldu, kullanıcıyı yönlendirin
+                header("Location: topic?id=$topic_id");
+                exit();
+            } else {
+                echo "Mesaj eklenirken bir hata oluştu: " . mysqli_error($conn);
+            }
         } else {
-            echo "Mesaj eklenirken bir hata oluştu: " . mysqli_error($conn);
+            echo "Konu eklenirken bir hata oluştu: " . mysqli_error($conn);
         }
     } else {
-        echo "Konu eklenirken bir hata oluştu: " . mysqli_error($conn);
+        echo "Kullanıcı bilgileri alınamadı.";
     }
 }
 

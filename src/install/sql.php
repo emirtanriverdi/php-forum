@@ -16,6 +16,7 @@ CREATE TABLE IF NOT EXISTS `messages` (
   `message_date` timestamp NOT NULL DEFAULT current_timestamp(),
   `user_id` int(11) NOT NULL,
   `topic_id` int(11) NOT NULL,
+  `username` varchar(255) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `user_id` (`user_id`),
   KEY `topic_id` (`topic_id`)
@@ -25,6 +26,7 @@ CREATE TABLE IF NOT EXISTS `topics` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `topic_title` varchar(255) NOT NULL,
   `topic_date` timestamp NOT NULL DEFAULT current_timestamp(),
+  `username` varchar(255) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=8;
 
