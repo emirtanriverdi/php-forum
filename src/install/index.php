@@ -2,8 +2,8 @@
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $host = $_POST['host'];
-    $username = $_POST['db_username'];
-    $password = $_POST['db_password'];
+    $db_username = $_POST['db_username'];
+    $db_password = $_POST['db_password'];
     $database = $_POST['database'];
 
     // Bağlantı bilgilerini connect.php dosyasına kaydet
