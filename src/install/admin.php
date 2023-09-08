@@ -53,8 +53,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <style>
         .form-group {
             width: 350px;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
         </style>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
