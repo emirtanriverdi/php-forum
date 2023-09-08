@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $folderToDelete = '../install';
             if (is_dir($folderToDelete)) {
                 if (rmdir($folderToDelete)) {
-                    echo "Klasör başarıyla silindi.";
+                    $errors[] = "Klasör başarıyla silindi.";
                 } else {
                     $errors[] = "Klasörü silerken bir hata oluştu.";
                 }
