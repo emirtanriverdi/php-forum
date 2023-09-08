@@ -2,7 +2,7 @@
 // connect.php dosyasını kontrol et
 if (filesize('connect.php') === 0) {
     // connect.php dosyası boşsa install.php sayfasına yönlendir
-    header('Location: install.php');
+    header('Location: install');
     exit;
 }
 
